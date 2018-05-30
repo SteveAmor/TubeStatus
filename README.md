@@ -1,2 +1,4 @@
 # TubeStatus
-London underground status
+London underground status for your web browser
+
+Inspired by https://github.com/johnmildinhall/tubestatus
