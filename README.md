@@ -2,3 +2,5 @@
 London underground status for your web browser
 
 Inspired by https://github.com/johnmildinhall/tubestatus
+
+In-line CSS intentional
