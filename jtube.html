@@ -26,22 +26,22 @@
            for(i=0; i<tubeData.length; i++) {
              $(".line").append(tubeData[i].name + "<br />");
              var lineStatus = tubeData[i].lineStatuses[0].statusSeverity;
-             $(".status").append(statusColour(lineStatus) + "<br />");
+             $(".status").append(lineStatusColour(lineStatus) + "<br />");
              if(lineStatus < worstStatus) {
                worstStatus = lineStatus;
              }
            }
-           updateFavicon(worstStatus);
+           updateFaviconColour(worstStatus);
          });
-         updateTime();
+         updateTimeStamp();
        }, 5000);
  
-       function updateTime() {
+       function updateTimeStamp() {
          var timeNow = new Date().toLocaleString();
          $(".time").html("<br />" + timeNow);
        }
  
-       function updateFavicon(severity) {
+       function updateFaviconColour(severity) {
          var colour = "green";
          if(severity < 7) {
            colour = "red";
@@ -53,7 +53,7 @@
          favicon.setAttribute('href', "https://github.com/SteveAmor/cheerlights/raw/master/browser/" + colour + ".png");
        }
        
-       function statusColour(severity) {
+       function lineStatusColour(severity) {
          var colour = 'darkgreen';
          if(severity < 7) {
            colour = 'red';
