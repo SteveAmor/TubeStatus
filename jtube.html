@@ -11,16 +11,19 @@
        jTube by Steve Amor<br /><br />
      </div>
      <div class="wrapper" style="font-size:20px;">
-      <div class="status" style="float: left;">fetching tube data....</div>
-      <div class="line" style="float: left; margin-left:10px;"></div>
+      <div class="status" style="float: left; font-size:20px"></div>
+      <div class="line" style="float: left; margin-left:10px; font-size:20px"></div>
      </div>
      <div class="time" style="clear: left; font-size:20px;"></div>
      
      <script>
+       displayFetchDataMessage();
+       var lastUpdateTime = new Date();
        setInterval(function() {
          $.getJSON("https://api.tfl.gov.uk/line/mode/tube/status", function(tubeData) {
            $(".line").empty();
            $(".status").empty();
+           whiteText();
            var worstStatus = 10;
            var i;
            for(i=0; i<tubeData.length; i++) {
@@ -32,13 +35,35 @@
              }
            }
            updateFaviconColour(worstStatus);
+           lastUpdateTime = new Date();
+           updateTimeStamp(lastUpdateTime);
          });
-         updateTimeStamp();
+         var timeNow = new Date();
+         if((lastUpdateTime.getTime() + 12000) < timeNow.getTime()) {
+           greyOutText();
+         }
        }, 5000);
  
-       function updateTimeStamp() {
-         var timeNow = new Date().toLocaleString();
-         $(".time").html("<br />" + timeNow);
+       function greyOutText(){
+         $(".line").css('color', 'grey');
+         $(".lineStatusSquare").css('background-color', 'grey');
+         $(".time").css('color', 'grey');
+         // TODO grey out (or remove) favicon if it is at all possible in all browsers
+       }
+       
+       function whiteText(){
+         $(".line").css('color', 'white');
+         $(".time").css('color', 'white');
+       }
+ 
+       function displayFetchDataMessage() {
+         $(".line").empty();
+         $(".status").empty(); 
+         $(".status").append("fetching tube data....");
+       }
+ 
+       function updateTimeStamp(lastUpdateTime) {
+         $(".time").html("<br />" + lastUpdateTime.toLocaleString());
        }
  
        function updateFaviconColour(severity) {
@@ -62,7 +87,7 @@
            colour = 'orange';
          }
          var style = "style='border-radius:35%; background-color:" + colour + "';";
-         var status = "<span " + style + ">&nbsp&nbsp&nbsp&nbsp;</span>";
+         var status = "<span class='lineStatusSquare' " + style + ">&nbsp&nbsp&nbsp&nbsp;</span>";
          return status;
        }
      </script>
