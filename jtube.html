@@ -38,8 +38,7 @@
            lastUpdateTime = new Date();
            updateTimeStamp(lastUpdateTime);
          });
-         var timeNow = new Date();
-         if((lastUpdateTime.getTime() + 12000) < timeNow.getTime()) {
+         if((lastUpdateTime.getTime() + 12000) < Date.now()) {
            greyOutText();
          }
        }, 5000);
