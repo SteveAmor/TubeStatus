@@ -40,6 +40,7 @@
          });
          if((lastUpdateTime.getTime() + 12000) < Date.now()) {
            greyOutText();
+           updateFaviconColour(-1);
          }
        }, 5000);
  
@@ -47,7 +48,6 @@
          $(".line").css('color', 'grey');
          $(".lineStatusSquare").css('background-color', 'grey');
          $(".time").css('color', 'grey');
-         // TODO grey out (or remove) favicon if it is at all possible in all browsers
        }
        
        function whiteText(){
@@ -67,7 +67,10 @@
  
        function updateFaviconColour(severity) {
          var colour = "green";
-         if(severity < 7) {
+         if(severity < 0) {
+           colour = "warmwhite";  // Special case if you lose the internet connection
+         }
+         else if(severity < 7) {
            colour = "red";
          }
          else if(severity < 9) {
